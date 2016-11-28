@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Test: Film locations in SF</title>
+        <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
+    </head>
+    <body>
+        <!-- Mocha requires this element so that it can display tests -->
+        <div id="mocha"></div>
+
+        <!-- These are elements used by the script -->
+        <ul id="genres-list"></ul>
+        <div id="overlay">
+            <button id="btn-close"></button>
+        </div>
+        
+        <script src="../../node_modules/mocha/mocha.js"></script>
+        <script src="../../node_modules/chai/chai.js"></script>
+        <script src="../../node_modules/sinon/pkg/sinon.js"></script>
+        <script>
+            mocha.setup({
+                ui: 'bdd',
+                ignoreLeaks: false,
+                globals: [ 'google', 'sf' ]
+            })
+        </script>
+        <script src="../../src/map.js"></script>
+        <script src="./test.browser.js"></script>
+        <script>
+            mocha.run()
+            mocha.checkLeaks()
+        </script>
+    </body>
+</html>

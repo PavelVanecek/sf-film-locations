@@ -1,0 +1,10 @@
+{
+  "extends": [ "standard" ],
+  "env": {
+    "es6": true
+  },
+  "rules": {
+    "generator-star-spacing": ["warn", { "before": false, "after": true }],
+    "yield-star-spacing": ["warn", { "before": false, "after": true }]
+  }
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Film locations in San Francisco</title>
+    <link rel="stylesheet" href="./style.css">
+    <script>
+      if (!('fetch' in window)) {
+        const s = document.createElement('script')
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.1/fetch.min.js'
+        document.write(s.outerHTML)
+      }
+    </script>
+  </head>
+  <body>
+
+    <div id="map"></div>
+
+    <div id="overlay">
+      <button id="btn-close" class="sf-button">&lt;- Close</button>
+      <h3>Filter by genre:</h3>
+      <form id="genres-list"></form>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyBZciNd77Unq1eRkftv95nx9gRlNm8en7s" async defer></script>
+    <script src="./fetchLocations.js"></script>
+    <script src="./map.js"></script>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, html {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#map {
+  height: 100%;
+}
+.sf-movie-infoWindow img.poster {
+  float: left;
+  max-width: 100px;
+  margin: 10px;
+}
+
+@media (min-width: 500px) {
+  .sf-movie-infoWindow img.poster {
+    float: left;
+    max-width: 80px;
+    margin: 0;
+  }
+  .sf-movie-infoWindow.has-poster .text-content {
+    margin-left: 90px;
+  }
+}
+
+.sf-movie-infoWindow p,
+.sf-movie-infoWindow h2 {
+    margin: .5em 0;
+}
+
+/* mimicking native gmaps controls */
+.sf-button {
+  margin: 10px;
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, .3);
+  cursor: pointer;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sf-button:hover {
+  background-color: #eee;
+  border-color: #eee;
+}
+
+@media (pointer: coarse) {
+  .sf-button {
+    padding: 2ex;
+  }
+}
+
+#overlay {
+  min-height: 100%;
+  width: 400px;
+  position: absolute;
+  top: 0;
+  left: -400px;
+  opacity: 0;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+  transition: all .3s cubic-bezier(0, 0.76, 0.14, 0.99);
+}
+
+#overlay.open {
+  transform: translateX(400px);
+  opacity: 1;
+}
+
+#overlay {
+  padding: 10px;
+}
+
+#genres-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#genres-list label.radio {
+  display: block;
+}
+
+h1, h2, h3 {
+  font-family: Roboto, Arial, sans-serif;
+}

@@ -1,0 +1,27 @@
+{
+  "name": "uber",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/**/*.js"
+  },
+  "keywords": [],
+  "author": "email@pavelvanecek.cz",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-is-generator": "^1.2.0",
+    "eslint": "^3.11.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "mocha": "^3.2.0",
+    "mocha-generators": "^1.2.0",
+    "sinon": "^1.17.6"
+  },
+  "dependencies": {
+    "node-fetch": "^1.6.3",
+    "progress": "^1.1.8"
+  }
+}
