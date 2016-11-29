@@ -23,7 +23,11 @@
       <form id="genres-list"></form>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyBZciNd77Unq1eRkftv95nx9gRlNm8en7s" async defer></script>
+    <!--
+      Makes sure that map tiles are served using HTTPS
+      see https://googlegeodevelopers.blogspot.cz/2011/03/maps-apis-over-ssl-now-available-to-all.html
+    -->
+    <script src="https://maps-api-ssl.google.com/maps/api/js?callback=initMap&key=AIzaSyBZciNd77Unq1eRkftv95nx9gRlNm8en7s" async defer></script>
     <script src="./fetchLocations.js"></script>
     <script src="./map.js"></script>
   </body>
