@@ -11,7 +11,7 @@
   let genreControlBtn
 
   let map
-// this name is specified in index.html
+  // this name is specified in index.html
   window.initMap = function () {
     map = new google.maps.Map(document.getElementById('map'), {
       center: SFPosition,
@@ -33,13 +33,20 @@
     filtersOverlay.classList.remove('open')
   }
 
-  function createButton (text) {
+  /**
+   * @param {string} label
+   * @return {Element}
+   */
+  function createButton (label) {
     const btn = document.createElement('button')
     btn.className = 'sf-button'
-    btn.textContent = text
+    btn.textContent = label
     return btn
   }
 
+  /**
+   * Attaches controls to map DOM
+   */
   function createControls () {
     genreControlBtn = createButton('Genres')
     genreControlBtn.addEventListener('click', function () {
@@ -48,6 +55,9 @@
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(genreControlBtn)
   }
 
+  /**
+   * Attaches genres to DOM
+   */
   function renderGenreFilters (genres) {
     const genreElements = Object.keys(genres)
     .map(function (genre) {
@@ -65,6 +75,9 @@
     genresList.innerHTML = showAll + genreElements
   }
 
+  /**
+   * Attaches handlers to static buttons
+   */
   function attachHandlers () {
     const closeBtn = document.getElementById('btn-close')
     closeBtn.addEventListener('click', closeOverlay)
@@ -80,6 +93,7 @@
   }
 
   /**
+   * Not all movies have posters defined.
    * @param {Object} movie
    * @return {boolean}
    */
@@ -91,6 +105,10 @@
     )
   }
 
+  /**
+   * @param {Object} movie
+   * @return {string} outerHTML of the image Element
+   */
   function createPoster (movie) {
     if (!hasPoster(movie)) {
       // nothing to create
@@ -99,6 +117,10 @@
     return `<img class="poster" src="${movie.meta.omdb.posterUrl}" alt="${movie.title} poster">`
   }
 
+  /**
+   * @param {Object} movie
+   * @return {string} omdb box to be included inside infoWindow
+   */
   function createOmdbBox (movie) {
     if (!movie || !movie.meta || !movie.meta.omdb) {
       // nothing to create
@@ -116,6 +138,10 @@
     return box
   }
 
+  /**
+   * @param {Object} movie
+   * @return {string} genre box to be included inside infoWindow
+   */
   function createGenre (movie) {
     if (!movie || !movie.meta || !movie.meta.omdb) {
       // nothing to create
@@ -124,6 +150,10 @@
     return '<p>' + movie.meta.omdb.genres.join(', ') + '</p>'
   }
 
+  /**
+   * @param {Object} movie
+   * @return {string} infoWindow outerHTML content
+   */
   function createInfoWindow (movie) {
     return `
       <section class="sf-movie-infoWindow${hasPoster(movie) && ' has-poster'}">
@@ -149,7 +179,9 @@
     `
   }
 
+  // Keep reference to the open window so that we are able to close it
   let openInfoWindow
+  // Save all markers so that we are able to hide and show them following the filter
   const markers = []
 
   function createMarker (loc) {
@@ -180,6 +212,11 @@
   }
 
   const genres = {}
+  /**
+   * Parses locations and finds all genres
+   *
+   * @param {Array<Object>} locations
+   */
   function findAllGenres (locations) {
     locations.forEach(loc => {
       if (!loc.meta || !loc.meta.omdb || !loc.meta.omdb.genres) {
@@ -193,6 +230,11 @@
     renderGenreFilters(genres)
   }
 
+  /**
+   * Filters markers based on provided genre
+   *
+   * @param {string} genreStr
+   */
   function filterByGenre (genreStr) {
     const genre = genres[genreStr]
     if (!genre) {
@@ -208,11 +250,17 @@
     genreControlBtn.textContent = genreStr
   }
 
+  /**
+   * Shows all markers
+   */
   function clearGenreFilter () {
     markers.forEach(m => m.setMap(map))
     genreControlBtn.textContent = 'Genres'
   }
 
+  /**
+   * @return {Promise}
+   */
   function fetchLocations () {
     return window.sf.fetchLocations()
       .then(locations => {
