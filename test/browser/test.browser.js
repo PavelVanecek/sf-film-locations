@@ -4,7 +4,13 @@ const { assert } = chai
 describe('map.js', () => {
   let locations
   let mockMap
+  let allMarkers
+  let infoWindow
   beforeEach(() => {
+    allMarkers = []
+    infoWindow = {
+      open: sinon.spy()
+    }
     locations = [{ meta: { omdb: {
       genres: ['GenreA', 'GenreB']
     }}}, { meta: { omdb: {
@@ -16,10 +22,18 @@ describe('map.js', () => {
     }
     window.google = { maps: {
       Map: sinon.stub().returns(mockMap),
-      Marker: sinon.stub().returns({
-        addListener: sinon.spy()
+      Marker: sinon.spy(() => {
+        let listener
+        const marker = {
+          addListener: sinon.spy((type, fn) => {
+            listener = fn
+          }),
+          click: () => listener()
+        }
+        allMarkers.push(marker)
+        return marker
       }),
-      InfoWindow: sinon.spy(),
+      InfoWindow: sinon.stub().returns(infoWindow),
       ControlPosition: {
         LEFT_TOP: 'LEFT_TOP'
       }
@@ -54,12 +68,12 @@ describe('map.js', () => {
     )
   })
 
-  it('should render infoWindows', () => {
-    sinon.assert.callCount(
-      window.google.maps.InfoWindow,
-      locations.length,
-      'there should be one InfoWindow for each location'
-    )
+  it('should not create any InfoWindow until marker is clicked', () => {
+    sinon.assert.notCalled(window.google.maps.InfoWindow)
+    sinon.assert.notCalled(infoWindow.open)
+    allMarkers[0].click()
+    sinon.assert.calledOnce(window.google.maps.InfoWindow)
+    sinon.assert.calledOnce(infoWindow.open)
   })
 
   it('should create "Open Filters" button', () => {

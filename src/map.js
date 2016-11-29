@@ -158,16 +158,23 @@
       map,
       title: loc.title
     })
-    const infoWindow = new google.maps.InfoWindow({
-      content: createInfoWindow(loc)
-    })
     marker.addListener('click', function () {
       if (openInfoWindow) {
         openInfoWindow.close()
       }
+      /*
+       * InfoWindow is created on demand, not in batch up front.
+       * This optimization is very important since it brings down the
+       * page weight down by +- 8MB.
+       * Show some <3 for mobile users and their FUPs!
+       */
+      const infoWindow = new google.maps.InfoWindow({
+        content: createInfoWindow(loc)
+      })
       infoWindow.open(map, marker)
       openInfoWindow = infoWindow
     })
+    // this reference is necessary for filtering markers (by genre)
     loc.marker = marker
     markers.push(marker)
   }
