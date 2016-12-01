@@ -52,7 +52,24 @@ exports.main = function main (process) {
   return function* () {
     for (let movie of movies()) {
       bar.tick({ movietitle: pad(movie.title, 10) })
+      /*
+       * This star here is necessary so that control flow is handled
+       * to the `process` function.
+       * At the same time this means that the function _must_
+       * be generator itself, even though it is not really doing
+       * anything asynchronous. Well ¯\_(ツ)_/¯
+
       yield* process(movie)
+      /*
+       * This consumes wayyy too much time.
+       * Stringify and write on each movie is intense and adds tens of seconds.
+       * On the other hand, I wanted to make sure I do not redownload any data
+       * during multiple runs so that I use only the necessary amount of
+       * already very limited API calls.
+       * A random crash or error might make me lose all data in memory;
+       * better be safe and waste few more seconds than pay fifty cents
+       * for gmaps API!
+       */
       yield save()
     }
   }
